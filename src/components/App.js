@@ -1,10 +1,11 @@
 import React from 'react';
+import logo from '../images/logo.svg';
 
 function App() {
   return (
     <div className="page">
       <header className="header">
-            <img src='#' alt="Логотип проекта Mesto" className="header__logo"/>
+            <img src={logo} alt="Логотип проекта Mesto" className="header__logo"/>
         </header>
 
         <main className="content">
