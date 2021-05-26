@@ -1,5 +1,6 @@
 import React from 'react';
 import api from './utils/Api';
+import Card from './Card';
 
 function Main({onEditProfile, onEditAvatar, onAddPlace}) {
     const [userName, setUserName] = React.useState();
@@ -20,21 +21,7 @@ function Main({onEditProfile, onEditAvatar, onAddPlace}) {
           });
       });
 
-      const listCards = cards.map((card) => (
-        
-        <div key={card.id} className="element">
-            <button className="element__trash link" />
-            <img src={card.link} alt={card.name} className="element__image" />
-            <div className="element__info">
-      <h2 className="element__title">{card.name}</h2>
-                <div className="element__like-box">
-                    <button type="button" className="element__rectangle link" />
-                    <span className="element__like-count">{card.likes.length}</span>
-                </div>
-            </div>
-        </div>
-    
-      ))
+      const listCards = cards.map((card) => <Card key={card._id} card={card} />);
 
     return(
         <main className="content">
