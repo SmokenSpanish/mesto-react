@@ -98,16 +98,6 @@ function App() {
         </div>
     </div>
 
-    {/* попап картинки */}
-    <div className="popup popup-image">
-        <div className="popup__body">
-            <div className="popup__image-container popup__overlay">
-                <button type="button" className="popup__close-button popup__image-button link"></button>
-                <img src='#' alt="место" className="popup__image"/>
-                <p className="popup__image-title">название картинки</p>
-            </div>
-        </div>
-    </div>
     </div>
   );
 }
