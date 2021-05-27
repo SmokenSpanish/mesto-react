@@ -13,6 +13,8 @@ function App() {
 
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = React.useState(false);
 
+  const [isConfirmPopupOpen, setIsConfirmPopupOpen] = React.useState(false);
+
   const [selectedCard, setSelectedCard] = React.useState(null);
 
   const handleEditAvatarClick = () => {
@@ -34,6 +36,7 @@ function App() {
     setIsEditAvatarPopupOpen(false);
     setIsEditProfilePopupOpen(false);
     setIsAddPlacePopupOpen(false);
+    setIsConfirmPopupOpen(false);
     setSelectedCard(null);
   }
 
@@ -52,6 +55,7 @@ function App() {
         onClose={closeAllPopups}
         type={'profile'}
         title={'Редактировать профиль'}
+        buttonText={'Сохранить'}
       >
         <fieldset className="popup__form">
           <label htmlFor="name-card" className="popup__label">
@@ -73,6 +77,7 @@ function App() {
         onClose={closeAllPopups}
         type={'place'}
         title={'Новое место'}
+        buttonText={'Создать'}
       >
         <fieldset className="popup__form">
           <label htmlFor="place-card" className="popup__label">
@@ -94,6 +99,7 @@ function App() {
         onClose={closeAllPopups}
         type={'avatar'}
         title={'Обновить аватар'}
+        buttonText={'Сохранить'}
       >
         <fieldset className="popup__form">
           <label htmlFor="avatar-card" className="popup__label">
@@ -104,20 +110,13 @@ function App() {
         </fieldset>
       </PopupWithForm>
 
-      {/* попап удаления карточки */}
-      <div className="popup popup-confirm">
-        <div className="popup__body">
-          <div className="popup__container popup__overlay">
-            <button type="reset" className="popup__close-button link"></button>
-            <h3 className="popup__title">Вы уверены?</h3>
-            <form name="confirm" className="popup__forms" noValidate>
-              <button type="submit" className="popup__button link">
-                Да
-                    </button>
-            </form>
-          </div>
-        </div>
-      </div>
+      <PopupWithForm
+        isOpen={isConfirmPopupOpen}
+        onClose={closeAllPopups}
+        type={'confirm'}
+        title={'Вы уверены?'}
+        buttonText={'Да'}
+      />
 
     </div>
   );
