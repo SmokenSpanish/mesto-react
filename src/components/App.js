@@ -2,13 +2,13 @@ import React from 'react';
 import Header from './Header';
 import Main from './Main';
 import Footer from './Footer';
-import PopupWithForm from './PopupWithForm';
 import ImagePopup from './ImagePopup';
 import api from './utils/Api';
 import { CurrentUserContext } from '../contexts/CurrentUserContext';
 import EditProfilePopup from './EditProfilePopup';
 import EditAvatarPopup from './EditAvatarPopup';
 import AddPlacePopup from './AddPlacePopup';
+import ConfirmPopup from './ConfirmPopup';
 
 function App() {
 
@@ -28,6 +28,8 @@ function App() {
 
   const [isLoading, setIsLoading] = React.useState(false);
 
+  const [idCardForDelete, setIdCardForDelete] = React.useState(null);
+
   React.useEffect(() => {
     api
       .getCards()
@@ -39,10 +41,17 @@ function App() {
       });
   }, []);
 
-  function handleCardDelete(card) {
-    api.deleteCard(card._id).then(() => {
-      setCards((state) => state.filter((c) => c._id !== card._id));
+  function handleCardDeleteConfirm(card) {
+    setIsLoading(true);
+    api.deleteCard(idCardForDelete).then(() => {
+      setCards((state) => state.filter((c) => c._id !== idCardForDelete));
+      closeAllPopups();
     });
+  }
+
+  function handleCardDelete(card) {
+    setIdCardForDelete(card._id);
+    setIsConfirmPopupOpen(true);
   }
 
   function handleCardLike(card) {
@@ -88,6 +97,7 @@ function App() {
     setIsConfirmPopupOpen(false);
     setSelectedCard(null);
     setIsLoading(false);
+    setIdCardForDelete(null);
   }
 
   const handleUpdateUser = (user) => {
@@ -166,12 +176,11 @@ function App() {
           isLoading={isLoading}
         />
 
-        <PopupWithForm
+        <ConfirmPopup
           isOpen={isConfirmPopupOpen}
           onClose={closeAllPopups}
-          type={'confirm'}
-          title={'Вы уверены?'}
-          buttonText={'Да'}
+          onConfirmDeleteCard={handleCardDeleteConfirm}
+          isLoading={isLoading}
         />
       </CurrentUserContext.Provider>
     </div>
