@@ -7,6 +7,7 @@ import ImagePopup from './ImagePopup';
 import api from './utils/Api';
 import { CurrentUserContext } from '../contexts/CurrentUserContext';
 import EditProfilePopup from './EditProfilePopup';
+import EditAvatarPopup from './EditAvatarPopup';
 
 function App() {
 
@@ -68,6 +69,18 @@ function App() {
       });
   };
 
+  const handleUpdateAvatar = ({ avatar }) => {
+    api
+      .setUserAvatar(avatar)
+      .then((newUser) => {
+        setCurrentUser(newUser);
+        closeAllPopups();
+      })
+      .catch((err) => {
+        console.log('handleUpdateAvatar', err);
+      });
+  };
+
   return (
     <div className="page">
       <CurrentUserContext.Provider value={currentUser}>
@@ -83,7 +96,13 @@ function App() {
           isOpen={isEditProfilePopupOpen}
           onClose={closeAllPopups}
           onUpdateUser={handleUpdateUser}
-          />
+        />
+
+        <EditAvatarPopup
+          isOpen={isEditAvatarPopupOpen}
+          onClose={closeAllPopups}
+          onUpdateAvatar={handleUpdateAvatar}
+        />
 
         <PopupWithForm
           isOpen={isAddPlacePopupOpen}
@@ -103,22 +122,6 @@ function App() {
               <input type="url" className="popup__input_type_imgLink popup__input" name="link"
                 placeholder="Ссылка на картинку" id="link-card" required minLength="3" />
               <span className="error" id="link-card-error"></span>
-            </label>
-          </fieldset>
-        </PopupWithForm>
-
-        <PopupWithForm
-          isOpen={isEditAvatarPopupOpen}
-          onClose={closeAllPopups}
-          type={'avatar'}
-          title={'Обновить аватар'}
-          buttonText={'Сохранить'}
-        >
-          <fieldset className="popup__form">
-            <label htmlFor="avatar-card" className="popup__label">
-              <input type="url" className="popup__input" name="avatar" placeholder="Ссылка на аватар"
-                id="link-ava" required minLength="3" />
-              <span className="error" id="link-ava-error"></span>
             </label>
           </fieldset>
         </PopupWithForm>
