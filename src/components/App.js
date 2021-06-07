@@ -6,6 +6,7 @@ import PopupWithForm from './PopupWithForm';
 import ImagePopup from './ImagePopup';
 import api from './utils/Api';
 import { CurrentUserContext } from '../contexts/CurrentUserContext';
+import EditProfilePopup from './EditProfilePopup';
 
 function App() {
 
@@ -55,6 +56,18 @@ function App() {
     setSelectedCard(null);
   }
 
+  const handleUpdateUser = (user) => {
+    api
+      .setUserInfo(user)
+      .then((newUser) => {
+        setCurrentUser(newUser);
+        closeAllPopups();
+      })
+      .catch((err) => {
+        console.log('handleUpdateUser', err);
+      });
+  };
+
   return (
     <div className="page">
       <CurrentUserContext.Provider value={currentUser}>
@@ -66,27 +79,11 @@ function App() {
           onCardClick={handleCardClick} />
         <Footer />
         <ImagePopup card={selectedCard} onClose={closeAllPopups} />
-        <PopupWithForm
+        <EditProfilePopup
           isOpen={isEditProfilePopupOpen}
           onClose={closeAllPopups}
-          type={'profile'}
-          title={'Редактировать профиль'}
-          buttonText={'Сохранить'}
-        >
-          <fieldset className="popup__form">
-            <label htmlFor="name-card" className="popup__label">
-              <input type="text" className="popup__input_type_name popup__input" name="name" required
-                minLength="2" maxLength="40" autoComplete="off" id="name-card" placeholder="Имя" />
-              <span className="error" id="name-card-error"></span>
-            </label>
-            <label htmlFor="job-card" className="popup__label">
-              <input type="text" className="popup__input_type_description popup__input" name="about"
-                placeholder="О себе" autoComplete="off" id="job-card" required minLength="2"
-                maxLength="200" />
-              <span className="error" id="job-card-error"></span>
-            </label>
-          </fieldset>
-        </PopupWithForm>
+          onUpdateUser={handleUpdateUser}
+          />
 
         <PopupWithForm
           isOpen={isAddPlacePopupOpen}
