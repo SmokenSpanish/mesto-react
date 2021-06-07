@@ -9,7 +9,7 @@ function PopupWithForm(props) {
                     {props.children}
 
                 <button type="submit" className="popup__button link">
-                    {props.buttonText}
+                    {props.isLoading ? 'Сохранение...' : props.buttonText}
                 </button>
 
                 </form>
