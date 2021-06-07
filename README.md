@@ -4,7 +4,7 @@
 
 ### Технологии
 
-БЭМ
+БЭМ 
 React (cra)
 
 [Посмотреть работу](https://SmokenSpanish.github.io/mesto-react/index.html)
