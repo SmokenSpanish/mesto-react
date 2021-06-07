@@ -1,4 +1,5 @@
 function PopupWithForm(props) {
+    const submitBtnCaptionIsLoading = props.submitBtnCaptionIsLoading || 'Сохранение...';
     return (
         <div className={`popup ${props.isOpen ? 'popup_opened' : ''}`}>
             <div className="popup__body">
@@ -9,7 +10,7 @@ function PopupWithForm(props) {
                     {props.children}
 
                 <button type="submit" className="popup__button link">
-                    {props.isLoading ? 'Сохранение...' : props.buttonText}
+                    {props.isLoading ? submitBtnCaptionIsLoading : props.buttonText}
                 </button>
 
                 </form>

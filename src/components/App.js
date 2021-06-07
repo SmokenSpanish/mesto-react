@@ -41,12 +41,17 @@ function App() {
       });
   }, []);
 
-  function handleCardDeleteConfirm(card) {
+  function handleCardDeleteConfirm() {
     setIsLoading(true);
-    api.deleteCard(idCardForDelete).then(() => {
-      setCards((state) => state.filter((c) => c._id !== idCardForDelete));
-      closeAllPopups();
-    });
+    api
+      .deleteCard(idCardForDelete)
+      .then(() => {
+        setCards((state) => state.filter((c) => c._id !== idCardForDelete));
+        closeAllPopups();
+      })
+      .catch((err) => {
+        console.log('handleCardDeleteConfirm', err);
+      });
   }
 
   function handleCardDelete(card) {
@@ -59,9 +64,16 @@ function App() {
     const isLiked = card.likes.some((i) => i._id === currentUser._id);
 
     // Отправляем запрос в API и получаем обновлённые данные карточки
-    api.changeLikeCardStatus(card._id, !isLiked).then((newCard) => {
-      setCards((state) => state.map((c) => (c._id === card._id ? newCard : c)));
-    });
+    api
+      .changeLikeCardStatus(card._id, !isLiked)
+      .then((newCard) => {
+        setCards((state) =>
+          state.map((c) => (c._id === card._id ? newCard : c)),
+        );
+      })
+      .catch((err) => {
+        console.log('handleCardLike', err);
+      });
   }
 
   React.useEffect(() => {
