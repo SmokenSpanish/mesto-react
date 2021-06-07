@@ -10,7 +10,7 @@ function EditProfilePopup(props) {
     React.useEffect(() => {
         setName(currentUser.name);
         setDescription(currentUser.about);
-      }, [currentUser]);
+      }, [currentUser, props.isOpen]);
     
       const handleChangeName = (evt) => {
         setName(evt.target.value);
@@ -41,12 +41,12 @@ function EditProfilePopup(props) {
         >
           <fieldset className="popup__form">
             <label htmlFor="name-card" className="popup__label">
-              <input onChange={handleChangeName} type="text" className="popup__input_type_name popup__input" defaultValue={name} name="name" required
+              <input onChange={handleChangeName} type="text" className="popup__input_type_name popup__input" value={name || ''} name="name" required
                 minLength="2" maxLength="40" autoComplete="off" id="name-card" placeholder="Имя" />
               <span className="error" id="name-card-error"></span>
             </label>
             <label htmlFor="job-card" className="popup__label">
-              <input onChange={handleChangeDescription} type="text" className="popup__input_type_description popup__input" defaultValue={description} name="about"
+              <input onChange={handleChangeDescription} type="text" className="popup__input_type_description popup__input" value={description || ''} name="about"
                 placeholder="О себе" autoComplete="off" id="job-card" required minLength="2"
                 maxLength="200" />
               <span className="error" id="job-card-error"></span>
