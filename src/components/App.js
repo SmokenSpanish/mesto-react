@@ -31,13 +31,13 @@ function App() {
   const [idCardForDelete, setIdCardForDelete] = React.useState(null);
 
   React.useEffect(() => {
-    api
-      .getCards()
-      .then((cardsData) => {
+    Promise.all([api.getUserInfo(), api.getCards()])
+      .then(([userData, cardsData]) => {
+        setCurrentUser(userData);
         setCards(cardsData);
       })
       .catch((err) => {
-        console.log('getCards', err);
+        console.log('Promise.all', err);
       });
   }, []);
 
@@ -51,7 +51,9 @@ function App() {
       })
       .catch((err) => {
         console.log('handleCardDeleteConfirm', err);
-      });
+      }).finally(() => {
+        setIsLoading(false);
+      })
   }
 
   function handleCardDelete(card) {
@@ -76,17 +78,6 @@ function App() {
       });
   }
 
-  React.useEffect(() => {
-    api
-      .getUserInfo()
-      .then((userData) => {
-        setCurrentUser(userData);
-      })
-      .catch((err) => {
-        console.log('getUserInfo', err);
-      });
-  }, []);
-
   const handleEditAvatarClick = () => {
     setIsEditAvatarPopupOpen(true);
   }
@@ -108,7 +99,7 @@ function App() {
     setIsAddPlacePopupOpen(false);
     setIsConfirmPopupOpen(false);
     setSelectedCard(null);
-    setIsLoading(false);
+    // setIsLoading(false);
     setIdCardForDelete(null);
   }
 
@@ -122,7 +113,9 @@ function App() {
       })
       .catch((err) => {
         console.log('handleUpdateUser', err);
-      });
+      }).finally(() => {
+        setIsLoading(false);
+      })
   };
 
   const handleUpdateAvatar = ({ avatar }) => {
@@ -135,7 +128,9 @@ function App() {
       })
       .catch((err) => {
         console.log('handleUpdateAvatar', err);
-      });
+      }).finally(() => {
+        setIsLoading(false);
+      })
   };
 
   const handleAddPlaceSubmit = (place) => {
@@ -148,7 +143,9 @@ function App() {
       })
       .catch((err) => {
         console.log('handleAddPlaceSubmit', err);
-      });
+      }).finally(() => {
+        setIsLoading(false);
+      })
   };
 
   return (
