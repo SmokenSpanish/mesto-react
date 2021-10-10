@@ -1,10 +1,19 @@
-## Проект "Место"
+# Mesto (React)
 
-На данном сайте можно добавить свою пикчу и оценить чужую
+## Описание проекта и функциональность:
 
-### Технологии
+Проект представляет собой сервис Mesto. На данном сайте можно добавить свою пикчу и оценить чужую.
+Данный проект создан для тренировки работы с React.
 
-БЭМ 
-React (cra)
+## Используемые технологии
 
-[Посмотреть работу](https://SmokenSpanish.github.io/mesto-react/index.html)
+* __`HTML`__
+* __`CSS`__
+* __`JavaScript`__
+* __`React`__
+
+## Запуск проекта
+
+1. `git clone` [`https://github.com/SmokenSpanish/mesto-react.git`](https://github.com/SmokenSpanish/mesto-react.git)
+2. `npm install`
+3. `npm start`
